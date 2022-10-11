@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList  } from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useState, useEffect } from "react"
 
 import database from "../../config/firebaseConfig";
@@ -10,8 +10,9 @@ export default function Order({ navigation }){
     const [order, setOrder] = useState([])
 
     useEffect(() => {
-        database.collection("Orders").onSnapshot((query) => {
+        database.collection("Orders").orderBy("date", "asc").onSnapshot((query) => {
             const list = []
+            console.log(query);
             query.forEach(element => {
                 list.push({...element.data(), id: element.id})
             });
@@ -23,22 +24,31 @@ export default function Order({ navigation }){
         database.collection("Orders").doc(id).delete()
     }
 
+    function convertToDate(time){
+        const fireBaseTime = new Date(
+            time.seconds * 1000 + time.nanoseconds / 1000000,
+          );
+        const atTime = fireBaseTime.toLocaleTimeString();
+        return atTime
+    }
+
     return(
         <View style={styles.container}>
             <Text style={styles.pageName}>Pedidos</Text>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={order}
-                renderItem={({item}) => {
+                style={styles.orderList}
+                renderItem={({item, index}) => {
                     return(
                     <View style={styles.Orders}>
                         <TouchableOpacity 
-                        style={styles.deleteOrder}
+                        style={styles.finishOrder}
                         onPress={() => {
-                            deleteOrder(item.id)
+                            finishOrder(item.id)
                         }}>
                             <FontAwesome
-                            name="star"
+                            name="check-circle-o"
                             size={23}
                             color={"#f92e6a"}
                             >
@@ -54,8 +64,21 @@ export default function Order({ navigation }){
                             })
                          }}
                          >
-                           <Text> Mesa: {item.mesa}</Text>
-                           <Text> Items: {item.products.length}</Text> 
+                            <Text> <Text style={{fontWeight:"bold"}}>Pedido:</Text> {index+1}</Text>
+                            <Text>  <Text style={{fontWeight:"bold"}}>Mesa:</Text> {item.mesa}</Text>
+                            <Text> <Text style={{fontWeight:"bold"}}>Items:</Text> {item.products.length}</Text> 
+                         </TouchableOpacity>
+                         <TouchableOpacity 
+                        style={styles.deleteOrder}
+                        onPress={() => {
+                            deleteOrder(item.id)
+                        }}>
+                            <FontAwesome
+                            name="close"
+                            size={23}
+                            color={"#f92e6a"}
+                            >
+                            </FontAwesome>
                          </TouchableOpacity>
                     </View>
                     )

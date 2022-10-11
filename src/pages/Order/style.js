@@ -10,17 +10,22 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: "bold",
         marginLeft: 30,
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 30
     },
     Orders:{
       width: "100%",
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: 30, 
+      marginTop: 10,
     },
     deleteOrder: {
         justifyContent: "center",
-        paddingLeft: 30,
+        paddingRight: 20
+    },
+    finishOrder: {
+        justifyContent: "center",
+        paddingLeft: 20
     },
     descriptionOrder:{
         width: "75%",
@@ -32,14 +37,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 6,
         marginBottom: 5,
-        marginRight: 20,
-        color: "#282b2db5"
+        color: "#282b2db5",
     },
     buttonNewOrder:{
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         position: "absolute",
-        top: 30,
+        top: 20,
         right: 20,
         backgroundColor: "#5cff42",
         borderRadius: 50,
