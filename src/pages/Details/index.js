@@ -10,9 +10,9 @@ import styles from "./style"
 
 export default function NewOrder({navigation, route}) {
 
-    const [mesa, setMesa] = useState(null);
+    const [mesaEdit, setMesaEdit] = useState(route.params.mesa);
     const [produtos, setProdutos] = useState([]);
-    const [observacoes, setObservacoes] = useState(null);
+    const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);
     const [totalValue, setTotalValue ] = useState(0);
 
     // const [finalizado, setFinalizado] = useState(false);
@@ -31,11 +31,7 @@ export default function NewOrder({navigation, route}) {
                 })
             });
 
-            
-
             setProdutos(list);
-            setMesa(route.params.mesa)
-            setObservacoes(route.params.observacoes)
         })
     }, [])
 
@@ -47,9 +43,9 @@ export default function NewOrder({navigation, route}) {
         })
 
         database.collection("Orders").doc(route.params.id).update({
-            mesa: mesa,
+            mesa: mesaEdit,
             products: products,
-            observacoes: observacoes,
+            observacoes: observacoesEdit,
         })
 
         navigation.navigate("Order Notes")
@@ -68,8 +64,8 @@ export default function NewOrder({navigation, route}) {
                 <TextInput
                     style={styles.input}
                     placeholder="Digite o número da mesa"
-                    onChangeText={setMesa}
-                    value={route.params.mesa}
+                    onChangeText={setMesaEdit}
+                    value={mesaEdit}
                     keyboardType={"number-pad"}
                 />
                 <Text style={styles.description}>Produtos:</Text>
@@ -136,8 +132,8 @@ export default function NewOrder({navigation, route}) {
                 <TextInput
                     style={styles.inputObservation}
                     placeholder="Digite as observacoes do pedido"
-                    onChangeText={setObservacoes}
-                    value={route.params.observacoes}
+                    onChangeText={setObservacoesEdit}
+                    value={observacoesEdit}
                     multiline={true}
                     numberOfLines={4}
                 />
