@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     },
     description:{
         fontSize: 18,
-        fontWeight: "bold",
         marginBottom: 10
     },
     input:{
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 18,
+        marginBottom: 5,
         alignItems: "center"
     },
     qtd:{
@@ -59,7 +58,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#f92e6a80",
         padding: 8,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        borderRadius: 4
 
     },
     inputObservation:{
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
         position: "relative",
         marginTop: 10,
         width: "40%",
-        padding: 10,
-        marginHorizontal: "30%",
-        backgroundColor: "#ff813e",
-        borderRadius: 14,
+        padding: 6,
+        borderColor: "#f92e6a",
+        borderWidth: 2,
+        borderRadius: 4,
         justifyContent: "center",
         alignItems: "center"
 
@@ -86,7 +86,13 @@ const styles = StyleSheet.create({
     iconButton:{
         color: "#fff",
         fontSize: 25,
-        fontWeight: "bold"
+        color: "#f92e6a",
+    },
+    footer:{
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
     }
 });
 
