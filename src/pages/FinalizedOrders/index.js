@@ -2,45 +2,28 @@ import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useState, useEffect } from "react"
 
 import database from "../../config/firebaseConfig";
-import { FontAwesome, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
+import { FontAwesome, MaterialCommunityIcons, AntDesign} from "@expo/vector-icons"
 import styles from "./style"
 
-export default function Order({ navigation }) {
+export default function FinalizedOrders({ navigation }) {
 
     const [order, setOrder] = useState([])
 
     useEffect(() => {
-        database.collection("Orders").orderBy("date", "asc").onSnapshot((query) => {
+        database.collection("Orders").orderBy("date", "desc").onSnapshot((query) => {
             const list = []
             query.forEach(element => {
-                if(element.data().finalizado === false)
+                if(element.data().finalizado === true){
                     list.push({ ...element.data(), id: element.id })
+                }
             });
             setOrder(list)
         })
     }, [])
 
-    function finishOrder(id) {
-        database.collection("Orders").doc(id).update({
-            finalizado: true
-        })
-    }
-
-    function deleteOrder(id) {
-        database.collection("Orders").doc(id).delete()
-    }
-
-    function convertToDate(time) {
-        const fireBaseTime = new Date(
-            time.seconds * 1000 + time.nanoseconds / 1000000,
-        );
-        const atTime = fireBaseTime.toLocaleTimeString();
-        return atTime
-    }
-
     return (
         <View style={styles.container} >
-            <Text style={styles.pageName}>Pedidos</Text>
+            <Text style={styles.pageName}>Pedidos Finalizados</Text>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={order}
@@ -49,21 +32,9 @@ export default function Order({ navigation }) {
                     return (
                         <View style={styles.Orders}>
                             <TouchableOpacity
-                                style={styles.finishOrder}
-                                onPress={() => {
-                                    finishOrder(item.id)
-                                }}>
-                                <FontAwesome
-                                    name="check-circle-o"
-                                    size={23}
-                                    color={"#f92e6a"}
-                                >
-                                </FontAwesome>
-                            </TouchableOpacity>
-                            <TouchableOpacity
                                 style={item.observacoes? styles.descriptionOrderWarner:styles.descriptionOrder}
                                 onPress={() => {
-                                    navigation.navigate("Details", {
+                                    navigation.navigate("FView", {
                                         id: item.id,
                                         products: item.products,
                                         mesa: item.mesa,
@@ -77,35 +48,14 @@ export default function Order({ navigation }) {
                                     name="exclamation-circle"
                                     size={23}
                                     color={"#f92e6a"}></FontAwesome> : false}
-                                <Text> <Text style={{ fontWeight: "bold" }}>Pedido:</Text> {index + 1}</Text>
-                                <Text>  <Text style={{ fontWeight: "bold" }}>Mesa:</Text> {item.mesa}</Text>
-                                <Text> <Text style={{ fontWeight: "bold" }}>Items:</Text> {item.products.reduce((acumulador, valorAtual) => acumulador + valorAtual.qtd, 0)}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.deleteOrder}
-                                onPress={() => {
-                                    deleteOrder(item.id)
-                                }}>
-                                <FontAwesome
-                                    name="close"
-                                    size={23}
-                                    color={"#f92e6a"}
-                                >
-                                </FontAwesome>
+                                <Text> <Text style={{ fontWeight: "bold" }}>Mesa:</Text> {item.mesa}</Text>
+                                <Text>  <Text style={{ fontWeight: "bold" }}>Items:</Text> {item.products.reduce((acumulador, valorAtual) => acumulador + valorAtual.qtd, 0)}</Text>
+                                <Text> <Text style={{ fontWeight: "bold" }}>R$</Text>{item.total}</Text>
                             </TouchableOpacity>
                         </View>
                     )
                 }}
             />
-            <TouchableOpacity
-                style={styles.buttonNewOrder}
-                onPress={() => navigation.navigate("New Order")}>
-                 <MaterialCommunityIcons
-                    name="square-edit-outline"
-                    size={23}
-                    color={"#FFF"}
-                />
-            </TouchableOpacity>
             <View style={styles.footer}>
             {/* <TouchableOpacity
                 onPress={() => navigation.navigate("New Order")}>
@@ -117,9 +67,9 @@ export default function Order({ navigation }) {
             </TouchableOpacity> */}
             <TouchableOpacity
                 style={{width:"25%", alignItems:"center"}}
-                onPress={() => navigation.navigate("Finalized Orders")}>
+                onPress={() => navigation.navigate("Order Notes")}>
                 <MaterialCommunityIcons
-                    name="text-box-check-outline"
+                    name="text-box-multiple-outline"
                     size={23}
                     color={"#3e3e3e"}
                 />

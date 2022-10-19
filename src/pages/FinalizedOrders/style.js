@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         paddingTop: 20
     },
     pageName: {
-        fontSize: 40,
+        fontSize: 30,
         fontWeight: "bold",
         marginLeft: 30,
         marginTop: 10,
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     },
     listOrders:{
         maxHeight: "72%",
+        paddingHorizontal: 20
     },
     Orders:{
       width: "100%",
@@ -22,16 +23,8 @@ const styles = StyleSheet.create({
       justifyContent: "space-between",
       marginTop: 10,
     },
-    deleteOrder: {
-        justifyContent: "center",
-        paddingRight: 20
-    },
-    finishOrder: {
-        justifyContent: "center",
-        paddingLeft: 20
-    },
     descriptionOrder:{
-        width: "75%",
+        width: "100%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -44,7 +37,7 @@ const styles = StyleSheet.create({
         color: "#282b2db5",
     },
     descriptionOrderWarner:{
-        width: "75%",
+        width: "100%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -57,18 +50,6 @@ const styles = StyleSheet.create({
         color: "#282b2db5",
         borderWidth: 2, 
         borderColor:"#f92e6a80"
-    },
-    buttonNewOrder:{
-        width: 50,
-        height: 50,
-        position: "absolute",
-        top: 25,
-        right: 20,
-        backgroundColor: "#f92e6a",
-        borderRadius: 4,
-        justifyContent: "center",
-        alignItems: "center"
-
     },
     buttonMenu:{
         position: "absolute",

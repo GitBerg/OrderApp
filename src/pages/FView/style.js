@@ -6,16 +6,16 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         paddingTop: 20,
         paddingHorizontal: 30,
-        paddingBottom: 100
+        paddingBottom: 50
     },
     title:{
-        fontSize: 30,
+        fontSize: 23,
         fontWeight: "bold",
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 30
     },
     description:{
-        fontSize: 18,
+        fontSize: 14,
         marginBottom: 10
     },
     input:{
@@ -52,8 +52,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     btns:{
-        flex:  1,
-        maxWidth:"35%",
+        width:"30%",
         flexDirection: "row",
         alignItems: "center",
         borderWidth: 1,
@@ -71,10 +70,10 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: "#f5f5f5cf",
         borderColor: "#e5e5e5",
-        marginBottom: 10
     },
-    buttonNewOrder: {
+    buttonUpdateOrder: {
         position: "relative",
+        marginTop: 10,
         width: "40%",
         padding: 6,
         borderColor: "#f92e6a",

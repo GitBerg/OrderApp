@@ -30,6 +30,10 @@ export default function NewOrder({ navigation }) {
         })
     }, [])
 
+    function calcTotalValue(){
+        let totalPrice = produtos.filter(el => el.qtd > 0).reduce((total, produto)=> total + produto.price*produto.qtd, 0)
+        setTotalValue(totalPrice)
+    }
 
 
     function addOrder() {
@@ -42,7 +46,8 @@ export default function NewOrder({ navigation }) {
             products: products,
             observacoes: observacoes,
             date: new Date(),
-            finalizado: false
+            finalizado: false,
+            total: totalValue
         })
 
         navigation.navigate("Order Notes")
@@ -51,9 +56,9 @@ export default function NewOrder({ navigation }) {
     return (
         <KeyboardAvoidingView style={styles.container}
             behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={10}
+            keyboardVerticalOffset={25}
         >
-            <View style={{ width: "100%", height: "95%" }}>
+            <View style={{ width: "100%", height: "96%" }} onTouchStart={Keyboard.dismiss}>
                 <Text style={styles.title}>Novo Pedido</Text>
                 <Text style={styles.description}>Mesa:</Text>
 
@@ -89,17 +94,17 @@ export default function NewOrder({ navigation }) {
                                                     let list = [...produtos]
                                                     list[index] = item
                                                     setProdutos(list)
-    
+                                                    calcTotalValue()
                                                 }}
                                             >
                                                 <FontAwesome
                                                     name="minus-circle"
-                                                    size={30}
+                                                    size={35}
                                                     color={"#f92e6a"}
                                                 >
                                                 </FontAwesome>
                                             </TouchableOpacity>
-                                            <Text>{item.qtd}</Text>
+                                            <Text style={{width:10}}>{item.qtd}</Text>
                                             <TouchableOpacity
                                                 onPress={() => {
                                                     item.qtd++
@@ -107,11 +112,11 @@ export default function NewOrder({ navigation }) {
                                                     let list = [...produtos]
                                                     list[index] = item
                                                     setProdutos(list)
-                                                    
+                                                    calcTotalValue()
                                                 }}>
                                                 <FontAwesome
                                                     name="plus-circle"
-                                                    size={30}
+                                                    size={35}
                                                     color={"#f92e6a"}
                                                 >
                                                 </FontAwesome>
@@ -124,7 +129,7 @@ export default function NewOrder({ navigation }) {
                     }
                     }
                 />
-                <Text style={styles.description}>Observações:</Text>
+                <Text style={[styles.description, {marginTop:5}]}>Observações:</Text>
                 <TextInput
                     style={styles.inputObservation}
                     placeholder="Digite as observacoes do pedido"
@@ -134,7 +139,7 @@ export default function NewOrder({ navigation }) {
                     numberOfLines={4}
                 />
                 <View style={styles.footer}>
-                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#f92e6a" }}>Total: R${produtos.filter(el => el.qtd > 0).reduce((total, produto)=> total + produto.price*produto.qtd, 0)}</Text>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#f92e6a" }}>Total: R${totalValue}</Text>
                     <TouchableOpacity
                         style={styles.buttonNewOrder}
                         onPress={() => {
