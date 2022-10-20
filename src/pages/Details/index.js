@@ -8,7 +8,7 @@ import { ImagesAssets } from '../../../assets/ImagesAssets';
 import database from "../../config/firebaseConfig";
 import styles from "./style"
 
-export default function NewOrder({navigation, route}) {
+export default function Details({navigation, route}) {
 
     const [mesaEdit, setMesaEdit] = useState(route.params.mesa);
     const [produtos, setProdutos] = useState([]);
@@ -48,16 +48,16 @@ export default function NewOrder({navigation, route}) {
             observacoes: observacoesEdit,
         })
 
-        navigation.navigate("Order Notes")
+        navigation.navigate("Order")
         
     }
 
     return (
-        <KeyboardAvoidingView style={styles.container}
+        <KeyboardAvoidingView style={styles.kav}
             behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={10}
+            keyboardVerticalOffset={Platform.OS == "ios" ? 130 : 140}
         >
-            <View style={{ width: "100%", height: "95%" }}>
+            <View style={styles.container}>
                 <Text style={styles.title}>Pedido Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa }</Text>
                 <Text style={styles.description}>Mesa:</Text>
 
@@ -71,7 +71,7 @@ export default function NewOrder({navigation, route}) {
                 <Text style={styles.description}>Produtos:</Text>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    style={styles.orderMenu}
+                    style={Platform.OS == "ios" ?{minHeight:"68%"}:{minHeight:"63%"} }
                     data={produtos}
                     renderItem={({ item }) => {
                         return (

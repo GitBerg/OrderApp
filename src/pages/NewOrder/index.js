@@ -50,17 +50,18 @@ export default function NewOrder({ navigation }) {
             total: totalValue
         })
 
-        navigation.navigate("Order Notes")
+        navigation.navigate("Order")
     }
 
     return (
-        <KeyboardAvoidingView style={styles.container}
+        <KeyboardAvoidingView  
+            style={styles.kav}
             behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={25}
+            keyboardVerticalOffset={Platform.OS == "ios" ? 130 : 140}
         >
-            <View style={{ width: "100%", height: "96%" }} onTouchStart={Keyboard.dismiss}>
-                <Text style={styles.title}>Novo Pedido</Text>
-                <Text style={styles.description}>Mesa:</Text>
+            <View style={styles.container} >
+                <Text style={styles.title} onTouchStart={Keyboard.dismiss}>Novo Pedido</Text>
+                <Text style={styles.description} onTouchStart={Keyboard.dismiss}>Mesa:</Text>
 
                 <TextInput
                     style={styles.input}
@@ -72,7 +73,7 @@ export default function NewOrder({ navigation }) {
                 <Text style={styles.description}>Produtos:</Text>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    style={styles.orderMenu}
+                    style={Platform.OS == "ios" ?{minHeight:"68%"}:{minHeight:"63%"} }
                     data={produtos}
                     renderItem={({ item }) => {
                         return (
@@ -129,7 +130,8 @@ export default function NewOrder({ navigation }) {
                     }
                     }
                 />
-                <Text style={[styles.description, {marginTop:5}]}>Observações:</Text>
+        
+                <Text style={styles.description}>Observações:</Text>
                 <TextInput
                     style={styles.inputObservation}
                     placeholder="Digite as observacoes do pedido"

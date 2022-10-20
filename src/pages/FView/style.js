@@ -1,21 +1,25 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    kav:{
+        flex: 1,
+        backgroundColor: "#fff",
+    },
     container: {
         flex: 1,
         backgroundColor: "#fff",
         paddingTop: 20,
         paddingHorizontal: 30,
-        paddingBottom: 50
+        paddingBottom: 100
     },
     title:{
-        fontSize: 23,
+        fontSize: 30,
         fontWeight: "bold",
         marginTop: 10,
-        marginBottom: 30
+        marginBottom: 10
     },
     description:{
-        fontSize: 14,
+        fontSize: 18,
         marginBottom: 10
     },
     input:{
@@ -29,6 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5cf",
     },
     card:{
+        flex: 1,
         borderColor: "#e5e5e5",
         borderWidth: 1,
         borderRadius: 4,
@@ -36,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5cf",
         marginBottom: 10,
         paddingHorizontal: 14,
-        paddingVertical: 12
+        paddingVertical: 12,
     },
     cardDescription:{
         flex: 1,
@@ -52,13 +57,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     btns:{
-        width:"30%",
+        flex:  1,
+        maxWidth:"25%",
         flexDirection: "row",
         alignItems: "center",
         borderWidth: 1,
         borderColor: "#f92e6a80",
         padding: 8,
-        justifyContent: "space-between",
+        justifyContent: "center",
         borderRadius: 4
 
     },
@@ -70,10 +76,11 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: "#f5f5f5cf",
         borderColor: "#e5e5e5",
+        marginBottom: 10,
+        maxHeight: 30
     },
-    buttonUpdateOrder: {
+    buttonDeleteOrder: {
         position: "relative",
-        marginTop: 10,
         width: "40%",
         padding: 6,
         borderColor: "#f92e6a",
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
-    }
+    },
 });
 
 export default styles

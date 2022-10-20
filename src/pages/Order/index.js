@@ -63,7 +63,7 @@ export default function Order({ navigation }) {
                             <TouchableOpacity
                                 style={item.observacoes? styles.descriptionOrderWarner:styles.descriptionOrder}
                                 onPress={() => {
-                                    navigation.navigate("Details", {
+                                    navigation.navigate("Detalhes", {
                                         id: item.id,
                                         products: item.products,
                                         mesa: item.mesa,
@@ -106,15 +106,15 @@ export default function Order({ navigation }) {
                     color={"#FFF"}
                 />
             </TouchableOpacity>
-            <View style={styles.footer}>
-            {/* <TouchableOpacity
+            {/* <View style={styles.footer}>
+            <TouchableOpacity
                 onPress={() => navigation.navigate("New Order")}>
                 <MaterialCommunityIcons
                     name="square-edit-outline"
                     size={23}
                     color={"#3e3e3e"}
                 />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <TouchableOpacity
                 style={{width:"25%", alignItems:"center"}}
                 onPress={() => navigation.navigate("Finalized Orders")}>
@@ -151,7 +151,7 @@ export default function Order({ navigation }) {
                     color={"#3e3e3e"}
                 />
             </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
     )
 }

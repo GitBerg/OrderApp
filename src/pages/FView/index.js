@@ -38,15 +38,14 @@ export default function FView({navigation, route}) {
     
     function deleteOrder(id) {
         database.collection("Orders").doc(id).delete()
-        navigation.navigate("Finalized Orders")
+        navigation.navigate("Finalizados")
     }
 
     return (
-        <KeyboardAvoidingView style={styles.container}
+        <KeyboardAvoidingView style={styles.kav}
             behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={10}
         >
-            <View style={{ width: "100%", height: "95%" }}>
+            <View style={styles.container}>
                 <Text style={styles.title}>Pedido Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa }</Text>
                 <Text style={styles.description}>Mesa:</Text>
 
@@ -60,7 +59,7 @@ export default function FView({navigation, route}) {
                 <Text style={styles.description}>Produtos:</Text>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    style={styles.orderMenu}
+                    style={Platform.OS == "ios" ?{minHeight:"68%"}:{minHeight:"63%"} }
                     data={produtos}
                     renderItem={({ item }) => {
                         return (
@@ -94,7 +93,7 @@ export default function FView({navigation, route}) {
                 <View style={styles.footer}>
                     <Text style={{ fontWeight: "bold", fontSize: 18, color: "#f92e6a" }}>Total: R${produtos.filter(el => el.qtd > 0).reduce((total, produto)=> total + produto.price*produto.qtd, 0)}</Text>
                     <TouchableOpacity
-                        style={styles.buttonUpdateOrder}
+                        style={styles.buttonDeleteOrder}
                         onPress={() => {
                             deleteOrder(route.params.id)
                         }}

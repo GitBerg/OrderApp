@@ -34,7 +34,7 @@ export default function FinalizedOrders({ navigation }) {
                             <TouchableOpacity
                                 style={item.observacoes? styles.descriptionOrderWarner:styles.descriptionOrder}
                                 onPress={() => {
-                                    navigation.navigate("FView", {
+                                    navigation.navigate("Finalizado Detalhes", {
                                         id: item.id,
                                         products: item.products,
                                         mesa: item.mesa,

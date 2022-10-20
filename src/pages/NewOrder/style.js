@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    kav:{
+        flex: 1,
+        backgroundColor: "#fff",
+    },
     container: {
         flex: 1,
         backgroundColor: "#fff",
@@ -29,6 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5cf",
     },
     card:{
+        flex: 1,
         borderColor: "#e5e5e5",
         borderWidth: 1,
         borderRadius: 4,
@@ -36,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5cf",
         marginBottom: 10,
         paddingHorizontal: 14,
-        paddingVertical: 12
+        paddingVertical: 12,
     },
     cardDescription:{
         flex: 1,
@@ -71,7 +76,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: "#f5f5f5cf",
         borderColor: "#e5e5e5",
-        marginBottom: 10
+        marginBottom: 10,
+        maxHeight: 30
     },
     buttonNewOrder: {
         position: "relative",
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
-    }
+    },
 });
 
 export default styles
