@@ -106,52 +106,6 @@ export default function Order({ navigation }) {
                     color={"#FFF"}
                 />
             </TouchableOpacity>
-            {/* <View style={styles.footer}>
-            <TouchableOpacity
-                onPress={() => navigation.navigate("New Order")}>
-                <MaterialCommunityIcons
-                    name="square-edit-outline"
-                    size={23}
-                    color={"#3e3e3e"}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={{width:"25%", alignItems:"center"}}
-                onPress={() => navigation.navigate("Finalized Orders")}>
-                <MaterialCommunityIcons
-                    name="text-box-check-outline"
-                    size={23}
-                    color={"#3e3e3e"}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-               style={{width:"25%", alignItems:"center"}}
-                onPress={() => navigation.navigate("Finalized Orders")}>
-                <MaterialCommunityIcons
-                    name="book-open-page-variant-outline"
-                    size={23}
-                    color={"#3e3e3e"}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={{width:"25%", alignItems:"center"}}
-                onPress={() => navigation.navigate("Finalized Orders")}>
-                <MaterialCommunityIcons
-                    name="trophy-outline"
-                    size={23}
-                    color={"#3e3e3e"}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={{width:"25%", alignItems:"center"}}
-                onPress={() => navigation.navigate("Finalized Orders")}>
-                <AntDesign
-                    name="setting"
-                    size={23}
-                    color={"#3e3e3e"}
-                />
-            </TouchableOpacity>
-            </View> */}
         </View>
     )
 }
