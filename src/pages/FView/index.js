@@ -46,7 +46,7 @@ export default function FView({navigation, route}) {
             behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
             <View style={styles.container}>
-                <Text style={styles.title}>Pedido Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa }</Text>
+                <Text style={styles.title}>Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa } Finalizado</Text>
                 <Text style={styles.description}>Mesa:</Text>
 
                 <TextInput

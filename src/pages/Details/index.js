@@ -58,7 +58,7 @@ export default function Details({navigation, route}) {
             keyboardVerticalOffset={Platform.OS == "ios" ? 130 : 140}
         >
             <View style={styles.container}>
-                <Text style={styles.title}>Pedido Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa }</Text>
+                <Text style={styles.title}>Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa }</Text>
                 <Text style={styles.description}>Mesa:</Text>
 
                 <TextInput
