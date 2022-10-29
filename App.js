@@ -19,7 +19,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
       <Stack.Screen
-              name="Order"
+              name="Todos os Pedidos"
               component={Routes}
               options={{
                 headerShown: false,
@@ -27,7 +27,7 @@ export default function App() {
               }}
             />
        <Stack.Screen
-              name="New Order"
+              name="Novo Pedido"
               component={NewOrder}
               options={{
                 headerTintColor: "#f92e6a"

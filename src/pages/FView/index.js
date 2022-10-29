@@ -19,19 +19,16 @@ export default function FView({navigation, route}) {
 
     useEffect(() => {
 
-        database.collection("/Users/PHc3F9Pjnw6Fg12SUlKE/Store/").onSnapshot((query) => {
+        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
             const list = []
-
-            query.forEach(element => {
-                element.data().menu.forEach((el, index) => {
-                    list.push({ ...el, qtd: 0})
+            
+            query.data().store.menu.forEach((el, index) => {
+                list.push({ ...el, qtd: 0})
                     route.params.products.forEach(e =>{
                         el.name === e.name? list[index] = e: false
                     })
-                })
-            });
-
-            setProdutos(list);
+            })
+            setProdutos(list)
         })
     }, [])
 

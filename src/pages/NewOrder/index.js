@@ -18,17 +18,16 @@ export default function NewOrder({ navigation }) {
     // const [finalizado, setFinalizado] = useState(false);
 
     useEffect(() => {
-        database.collection("/Users/PHc3F9Pjnw6Fg12SUlKE/Store/").onSnapshot((query) => {
+        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
             const list = []
-
-            query.forEach(element => {
-                element.data().menu.forEach(el => {
-                    list.push({ ...el, qtd: 0 })
-                })
-            });
+            
+            query.data().store.menu.forEach(el => {
+                list.push({ ...el, qtd: 0 })
+            })
             setProdutos(list)
         })
     }, [])
+
 
     function calcTotalValue(){
         let totalPrice = produtos.filter(el => el.qtd > 0).reduce((total, produto)=> total + produto.price*produto.qtd, 0)
@@ -50,7 +49,7 @@ export default function NewOrder({ navigation }) {
             total: totalValue
         })
 
-        navigation.navigate("Order")
+        navigation.navigate("Pedidos")
     }
 
     return (

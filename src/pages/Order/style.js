@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     deleteOrder: {
         justifyContent: "center",
-        paddingRight: 20
+        paddingRight: 20,
     },
     finishOrder: {
         justifyContent: "center",
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        backgroundColor: "#ccc",
+        backgroundColor: "#e5e5e5",
         alignItems: "center",
         padding: 12,
         paddingHorizontal: 20,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        backgroundColor: "#ccc",
+        backgroundColor: "#e5e5e5",
         alignItems: "center",
         padding: 12,
         paddingHorizontal: 20,
@@ -81,21 +81,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
 
     },
-    iconButton:{
-        color: "#fff",
-        fontSize: 25,
-        fontWeight: "bold"
-    },
-    footer:{
-        position: "absolute",
-        bottom: 0,
-        flexDirection: "row",
-        width: "100%",
-        height:90,
-        paddingTop: 10,
-        borderTopWidth: 1,
-        borderColor: "#f92e6a55",
-    }
 });
 
 export default styles

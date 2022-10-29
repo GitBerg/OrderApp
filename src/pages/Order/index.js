@@ -55,7 +55,7 @@ export default function Order({ navigation }) {
                                 }}>
                                 <FontAwesome
                                     name="check-circle-o"
-                                    size={23}
+                                    size={30}
                                     color={"#f92e6a"}
                                 >
                                 </FontAwesome>
@@ -88,7 +88,7 @@ export default function Order({ navigation }) {
                                 }}>
                                 <FontAwesome
                                     name="close"
-                                    size={23}
+                                    size={30}
                                     color={"#f92e6a"}
                                 >
                                 </FontAwesome>
@@ -99,7 +99,7 @@ export default function Order({ navigation }) {
             />
             <TouchableOpacity
                 style={styles.buttonNewOrder}
-                onPress={() => navigation.navigate("New Order")}>
+                onPress={() => navigation.navigate("Novo Pedido")}>
                  <MaterialCommunityIcons
                     name="square-edit-outline"
                     size={23}
