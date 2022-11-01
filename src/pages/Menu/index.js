@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TextInput, TouchableOpacity, Keyboard } from "react-native";
+import { View, Text, FlatList, TextInput, TouchableOpacity, Keyboard, KeyboardAvoidingView } from "react-native";
 import { useEffect, useState } from "react";
 
 import CustomTextInput from "./CustomTextInput";
@@ -6,7 +6,7 @@ import CustomNumberInput from "./CustomNumberInput";
 import CustomNewTextInput from "./CustomNewTextInput";
 import CustomNewNumberInput from "./CustomNewNumberInput";
 
-import { FontAwesome, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
+import {  MaterialCommunityIcons } from "@expo/vector-icons"
 
 import database from "../../config/firebaseConfig";
 import styles from "./style"
@@ -28,11 +28,11 @@ export default function Menu() {
             })
             setProdutos(list)
         })
-    },[])
+    }, [])
 
     const deleteProduct = (index) => {
         produtos.splice(index, 1)
-        setProdutos( produtos => {
+        setProdutos(produtos => {
             [...produtos]
         })
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
@@ -40,7 +40,7 @@ export default function Menu() {
                 menu: [...produtos]
             }
         })
-        
+
     }
 
     const addProduct = () => {
@@ -71,35 +71,41 @@ export default function Menu() {
     return (
         <View style={styles.container}>
             <Text style={[styles.title, popUp ? { opacity: 0.3 } : false]} onTouchStart={Keyboard.dismiss}>Cardápio</Text>
-            <View style={styles.list} onTouchStart={popUp ? Keyboard.dismiss : false}>
-                <FlatList style={popUp ? { opacity: 0.3 } : false}
-                    pointerEvents={popUp ? "none" : "auto"}
-                    data={produtos}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <View style={styles.card}>
-                                <View>
-                                    <Text style={styles.description}>Nome</Text>
-                                    <CustomTextInput style={styles.nameInput} name={item.name} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} />
+            <KeyboardAvoidingView
+                behavior="padding"
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 100}
+                enabled={true}
+            >
+                <View style={styles.list} onTouchStart={popUp ? Keyboard.dismiss : false}>
+                    <FlatList style={popUp ? { opacity: 0.3 } : false}
+                        pointerEvents={popUp ? "none" : "auto"}
+                        data={produtos}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <View style={styles.card}>
+                                    <View>
+                                        <Text style={styles.description}>Nome</Text>
+                                        <CustomTextInput style={styles.nameInput} name={item.name} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} />
+                                    </View>
+                                    <Text style={styles.description}>Preço</Text>
+                                    <View style={styles.priceAndClose}>
+                                        <CustomNumberInput style={styles.priceInput} price={item.price} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} />
+                                        <TouchableOpacity
+                                            onPress={() => deleteProduct(index)}
+                                        >
+                                            <MaterialCommunityIcons
+                                                name="close-box"
+                                                size={30}
+                                                color={"#f92e6a"}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                                <Text style={styles.description}>Preço</Text>
-                                <View style={styles.priceAndClose}>
-                                    <CustomNumberInput style={styles.priceInput} price={item.price} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} />
-                                    <TouchableOpacity
-                                        onPress={() => deleteProduct(index)}
-                                    >
-                                        <MaterialCommunityIcons
-                                            name="close-box"
-                                            size={30}
-                                            color={"#f92e6a"}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        )
-                    }} />
-            </View>
+                            )
+                        }} />
+                </View>
+            </KeyboardAvoidingView>
             <TouchableOpacity
                 onPress={addProduct}
                 style={styles.btnAddProduct}

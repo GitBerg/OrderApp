@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard, TouchableWithoutFeedback, Image, KeyboardAvoidingView, Platform } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard,KeyboardAvoidingView, Platform } from "react-native";
 import { FontAwesome } from "@expo/vector-icons"
-
-import { ImagesAssets } from '../../../assets/ImagesAssets';
-
 
 import database from "../../config/firebaseConfig";
 import styles from "./style"
@@ -14,13 +11,14 @@ export default function NewOrder({ navigation }) {
     const [produtos, setProdutos] = useState([]);
     const [observacoes, setObservacoes] = useState(null);
     const [totalValue, setTotalValue ] = useState(0);
+    const [avoidingView, setAvoidingView] = useState(false)
 
-    // const [finalizado, setFinalizado] = useState(false);
+    const [storeName, setStoreName] = useState()
 
     useEffect(() => {
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
             const list = []
-            
+            setStoreName(query.data().store.name)
             query.data().store.menu.forEach(el => {
                 list.push({ ...el, qtd: 0 })
             })
@@ -43,6 +41,7 @@ export default function NewOrder({ navigation }) {
         database.collection("Orders").add({
             mesa: mesa,
             products: products,
+            store: storeName,
             observacoes: observacoes,
             date: new Date(),
             finalizado: false,
@@ -53,22 +52,25 @@ export default function NewOrder({ navigation }) {
     }
 
     return (
-        <KeyboardAvoidingView  
-            style={styles.kav}
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS == "ios" ? 130 : 140}
+        <View
+        style={styles.kav}
         >
             <View style={styles.container} >
                 <Text style={styles.title} onTouchStart={Keyboard.dismiss}>Novo Pedido</Text>
                 <Text style={styles.description} onTouchStart={Keyboard.dismiss}>Mesa:</Text>
 
+                <KeyboardAvoidingView
+                behavior= {Platform.OS === 'ios'? 'padding': 'height'}
+                enabled = {avoidingView}>
                 <TextInput
                     style={styles.input}
                     placeholder="Digite o número da mesa"
                     onChangeText={setMesa}
                     value={mesa}
                     keyboardType={"number-pad"}
+                    onTouchStart={() => setAvoidingView(false)}
                 />
+                </KeyboardAvoidingView>
                 <Text style={styles.description}>Produtos:</Text>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -129,7 +131,11 @@ export default function NewOrder({ navigation }) {
                     }
                     }
                 />
-        
+                <KeyboardAvoidingView
+                behavior="position"
+                keyboardVerticalOffset = {Platform.OS === 'ios'? 90: 100}
+                enabled = {avoidingView}>
+                    <View style={{backgroundColor: "#fff"}}>
                 <Text style={styles.description}>Observações:</Text>
                 <TextInput
                     style={styles.inputObservation}
@@ -138,7 +144,10 @@ export default function NewOrder({ navigation }) {
                     value={observacoes}
                     multiline={true}
                     numberOfLines={4}
+                    onTouchStart={() => setAvoidingView(true)}
                 />
+                </View>
+                </KeyboardAvoidingView>
                 <View style={styles.footer}>
                     <Text style={{ fontWeight: "bold", fontSize: 18, color: "#f92e6a" }}>Total: R${totalValue}</Text>
                     <TouchableOpacity
@@ -151,6 +160,6 @@ export default function NewOrder({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 }

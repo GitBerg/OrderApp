@@ -16,7 +16,7 @@ export default function CustomNumberInput(props) {
     const handleOnBlurAndUpdate = () => {
         let newArray = [...props.produtos]
         let upName = newArray[props.index].name
-        newArray[props.index] = {name:upName, price: price}
+        newArray[props.index] = {name:upName, price: Number(price)}
         props.setProdutos([...newArray])
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
             store:{

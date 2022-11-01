@@ -5,9 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Menu from "./pages/Menu";
 import FinalizedOrders from "./pages/FinalizedOrders";
 import Settings from "./pages/Settings";
-import Leadboard from "./pages/Leadboard";
+import Store from "./pages/Store";
 import Order from "./pages/Order";
-import NewOrder from "./pages/NewOrder";
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -97,19 +96,19 @@ export default function Routes() {
                 }}
             />
             <Tab.Screen
-                name="Leadboard"
-                component={Leadboard}
+                name="Loja"
+                component={Store}
                 options={{
                   headerTintColor: "#f92e6a",
                   tabBarIcon: ({color, size, focused} ) => {
                     if(focused)
                         return  <MaterialCommunityIcons
-                        name="trophy-outline"
+                        name="storefront-outline"
                         size={size}
                         color={color}
                     />
                     return  <MaterialCommunityIcons
-                        name="trophy-outline"
+                        name="storefront-outline"
                         size={size}
                         color={color}
                     />

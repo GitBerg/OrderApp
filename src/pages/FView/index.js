@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard, TouchableWithoutFeedback, Image, KeyboardAvoidingView, Platform } from "react-native";
-import { FontAwesome } from "@expo/vector-icons"
-
-import { ImagesAssets } from '../../../assets/ImagesAssets';
-
 
 import database from "../../config/firebaseConfig";
 import styles from "./style"
@@ -13,9 +9,6 @@ export default function FView({navigation, route}) {
     const [mesaEdit, setMesaEdit] = useState(route.params.mesa);
     const [produtos, setProdutos] = useState([]);
     const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);
-    const [totalValue, setTotalValue ] = useState(0);
-
-    // const [finalizado, setFinalizado] = useState(false);
 
     useEffect(() => {
 
@@ -28,7 +21,8 @@ export default function FView({navigation, route}) {
                         el.name === e.name? list[index] = e: false
                     })
             })
-            setProdutos(list)
+            let newList = list.filter(e => e.qtd > 0)
+            setProdutos(newList)
         })
     }, [])
 

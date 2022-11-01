@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard, TouchableWithoutFeedback, Image, KeyboardAvoidingView, Platform } from "react-native";
 import { FontAwesome } from "@expo/vector-icons"
 
-import { ImagesAssets } from '../../../assets/ImagesAssets';
-
-
 import database from "../../config/firebaseConfig";
 import styles from "./style"
 
@@ -13,7 +10,7 @@ export default function Details({navigation, route}) {
     const [mesaEdit, setMesaEdit] = useState(route.params.mesa);
     const [produtos, setProdutos] = useState([]);
     const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);
-    const [totalValue, setTotalValue ] = useState(0);
+    const [avoidingView, setAvoidingView] = useState(false)
 
 
     useEffect(() => {
@@ -45,26 +42,28 @@ export default function Details({navigation, route}) {
             observacoes: observacoesEdit,
         })
 
-        navigation.navigate("Order")
+        navigation.navigate("Pedidos")
         
     }
 
     return (
-        <KeyboardAvoidingView style={styles.kav}
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS == "ios" ? 130 : 140}
-        >
+        <View style={styles.kav}>
             <View style={styles.container}>
                 <Text style={styles.title}>Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa }</Text>
                 <Text style={styles.description}>Mesa:</Text>
 
+                <KeyboardAvoidingView
+                behavior= {Platform.OS === 'ios'? 'padding': 'height'}
+                enabled = {avoidingView}>
                 <TextInput
                     style={styles.input}
                     placeholder="Digite o número da mesa"
                     onChangeText={setMesaEdit}
                     value={mesaEdit}
                     keyboardType={"number-pad"}
+                    onTouchStart={() => setAvoidingView(false)}
                 />
+                </KeyboardAvoidingView>
                 <Text style={styles.description}>Produtos:</Text>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -125,6 +124,11 @@ export default function Details({navigation, route}) {
                     }
                     }
                 />
+                <KeyboardAvoidingView
+                behavior="position"
+                keyboardVerticalOffset = {Platform.OS === 'ios'? 90: 100}
+                enabled = {avoidingView}>
+                     <View style={{backgroundColor: "#fff"}}>
                 <Text style={styles.description}>Observações:</Text>
                 <TextInput
                     style={styles.inputObservation}
@@ -133,7 +137,10 @@ export default function Details({navigation, route}) {
                     value={observacoesEdit}
                     multiline={true}
                     numberOfLines={4}
+                    onTouchStart={() => setAvoidingView(true)}
                 />
+                </View>
+                </KeyboardAvoidingView>
                 <View style={styles.footer}>
                     <Text style={{ fontWeight: "bold", fontSize: 18, color: "#f92e6a" }}>Total: R${produtos.filter(el => el.qtd > 0).reduce((total, produto)=> total + produto.price*produto.qtd, 0)}</Text>
                     <TouchableOpacity
@@ -146,6 +153,6 @@ export default function Details({navigation, route}) {
                     </TouchableOpacity>
                 </View>
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
