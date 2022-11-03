@@ -21,7 +21,8 @@ export default function CustomTextInput(props){
         props.setProdutos([...newArray])
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
             store:{
-                menu: [...newArray]
+                menu: [...newArray],
+                name: props.storeName
             }
         })
         setFocus(false)

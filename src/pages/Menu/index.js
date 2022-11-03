@@ -17,12 +17,13 @@ export default function Menu() {
     const [popUp, setPopUp] = useState(false)
     const [newProductName, setNewProductName] = useState("")
     const [newProductPrice, setNewProductPrice] = useState("0")
+    const [store, setStore] = useState("")
 
 
     useEffect(() => {
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
             const list = []
-
+            setStore(query.data().store.name)
             query.data().store.menu.forEach(el => {
                 list.push({ ...el })
             })
@@ -37,7 +38,8 @@ export default function Menu() {
         })
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
             store: {
-                menu: [...produtos]
+                menu: [...produtos],
+                name: store
             }
         })
 
@@ -59,7 +61,8 @@ export default function Menu() {
         let produto = { name: newProductName, price: Number(newProductPrice) }
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
             store: {
-                menu: [...produtos, produto]
+                menu: [...produtos, produto],
+                name: store
             }
         })
         setNewProductName("")
@@ -86,11 +89,11 @@ export default function Menu() {
                                 <View style={styles.card}>
                                     <View>
                                         <Text style={styles.description}>Nome</Text>
-                                        <CustomTextInput style={styles.nameInput} name={item.name} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} />
+                                        <CustomTextInput style={styles.nameInput} name={item.name} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={store} />
                                     </View>
                                     <Text style={styles.description}>Preço</Text>
                                     <View style={styles.priceAndClose}>
-                                        <CustomNumberInput style={styles.priceInput} price={item.price} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} />
+                                        <CustomNumberInput style={styles.priceInput} price={item.price} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={store}/>
                                         <TouchableOpacity
                                             onPress={() => deleteProduct(index)}
                                         >

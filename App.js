@@ -1,11 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Order from "./src/pages/Order";
 import NewOrder from "./src/pages/NewOrder";
-import Menu from "./src/pages/Menu";
 import Details from "./src/pages/Details";
-import FinalizedOrders from "./src/pages/FinalizedOrders";
 import FView from "./src/pages/FView";
 
 import Routes from "./src/routes";
