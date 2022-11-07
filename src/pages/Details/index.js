@@ -14,15 +14,15 @@ export default function Details({navigation, route}) {
     const database = firebase.firestore()
 
     useEffect(() => {
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
+        database.collection(navigation.getState().routes[0].params.userId).onSnapshot((query) => {
             const list = []
             
-            query.data().store.menu.forEach((el, index) => {
-                list.push({ ...el, qtd: 0})
-                    route.params.products.forEach(e =>{
-                        el.name === e.name? list[index] = e: false
-                    })
-            })
+            // query.data().store.menu.forEach((el, index) => {
+            //     list.push({ ...el, qtd: 0})
+            //         route.params.products.forEach(e =>{
+            //             el.name === e.name? list[index] = e: false
+            //         })
+            // })
             setProdutos(list)
         })
 

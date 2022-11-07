@@ -5,7 +5,7 @@ import { FontAwesome } from "@expo/vector-icons"
 import firebase from "../../config/firebaseConfig";
 import styles from "./style"
 
-export default function NewOrder({ navigation }) {
+export default function NewOrder({ navigation, route }) {
     const database = firebase.firestore()
     const [mesa, setMesa] = useState(null);
     const [produtos, setProdutos] = useState([]);
@@ -13,14 +13,14 @@ export default function NewOrder({ navigation }) {
     const [totalValue, setTotalValue ] = useState(0);
     const [avoidingView, setAvoidingView] = useState(false)
 
-    const [storeName, setStoreName] = useState()
 
     useEffect(() => {
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
+        database.collection(route.params.userId).onSnapshot((query) => {
             const list = []
-            setStoreName(query.data().store.name)
-            query.data().store.menu.forEach(el => {
-                list.push({ ...el, qtd: 0 })
+            query.forEach(el => {
+                el.data()?.menu.forEach(prod => {
+                    list.push({ ...prod, qtd: 0 })
+                })
             })
             setProdutos(list)
         })
@@ -39,9 +39,9 @@ export default function NewOrder({ navigation }) {
         })
 
         database.collection("Orders").add({
+            userId: route.params.userId,
             mesa: mesa,
             products: products,
-            store: storeName,
             observacoes: observacoes,
             date: new Date(),
             finalizado: false,

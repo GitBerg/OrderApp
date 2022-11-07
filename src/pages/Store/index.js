@@ -11,7 +11,6 @@ export default function Store() {
     const database = firebase.firestore()
     const [store, setStore] = useState({})
     const [finishedOrders, setFinishedOrders] = useState([])
-    const [storeName, setStoreName] = useState("")
 
     useEffect(() => {
         fetchUser()
@@ -31,7 +30,6 @@ export default function Store() {
                     setFinishedOrders(finalizedOrders)
                 })
                 setStore(value)
-                setStoreName(name)
             })
         } catch (error) {
             console.log(error);

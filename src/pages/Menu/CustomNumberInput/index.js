@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { TextInput } from "react-native";
 
-import database from "../../../config/firebaseConfig";
+import firebase from "../../../config/firebaseConfig";
 
 export default function CustomNumberInput(props) {
-
+    const database = firebase.firestore()
     const [price, setPrice] = useState(JSON.stringify(props.price))
     const [focus, setFocus] = useState(false)
 
@@ -18,11 +18,8 @@ export default function CustomNumberInput(props) {
         let upName = newArray[props.index].name
         newArray[props.index] = {name:upName, price: Number(price)}
         props.setProdutos([...newArray])
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
-            store:{
+        database.collection(props.user).doc(props.doc).update({
                 menu: [...newArray],
-                name: props.storeName
-            }
         })
         setFocus(false)
         props.setPopUp(false)

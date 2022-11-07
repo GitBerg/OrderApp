@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TextInput, TouchableOpacity, Keyboard, KeyboardAvoidingView } from "react-native";
+import { View, Text, FlatList, TextInput, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import { useEffect, useState } from "react";
 
 import CustomTextInput from "./CustomTextInput";
@@ -11,24 +11,34 @@ import {  MaterialCommunityIcons } from "@expo/vector-icons"
 import firebase from "../../config/firebaseConfig";
 import styles from "./style"
 
-export default function Menu() {
+export default function Menu({navigation}) {
     const database = firebase.firestore()
+    const [docId, setDocId] = useState("")
     const [produtos, setProdutos] = useState([])
     const [popUp, setPopUp] = useState(false)
     const [newProductName, setNewProductName] = useState("")
     const [newProductPrice, setNewProductPrice] = useState("0")
-    const [store, setStore] = useState("")
 
 
     useEffect(() => {
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
-            const list = []
-            setStore(query.data().store.name)
-            query.data().store.menu.forEach(el => {
-                list.push({ ...el })
+
+        try{
+            database.collection(navigation.getState().routes[0].params.userId).onSnapshot((query) => {
+                const list = []
+                
+                query.forEach(element => {
+                   setDocId(element._delegate._document.key.path.segments[6]);
+                   element.data().menu.forEach( el => {
+                        list.push({ ...el })
+                   })
+                });
+                setProdutos(list)
             })
-            setProdutos(list)
-        })
+        }catch(error){
+            console.log(error);
+        }
+        
+       
     }, [])
 
     const deleteProduct = (index) => {
@@ -36,11 +46,8 @@ export default function Menu() {
         setProdutos(produtos => {
             [...produtos]
         })
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
-            store: {
-                menu: [...produtos],
-                name: store
-            }
+        database.collection(navigation.getState().routes[0].params.userId).doc(docId).update({
+                menu: [...produtos]
         })
 
     }
@@ -59,11 +66,8 @@ export default function Menu() {
     const createNewProduct = () => {
         setPopUp(false)
         let produto = { name: newProductName, price: Number(newProductPrice) }
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
-            store: {
-                menu: [...produtos, produto],
-                name: store
-            }
+        database.collection(navigation.getState().routes[0].params.userId).doc(docId).update({
+                menu: [...produtos, produto]
         })
         setNewProductName("")
         setNewProductPrice("0")
@@ -75,9 +79,10 @@ export default function Menu() {
         <View style={styles.container}>
             <Text style={[styles.title, popUp ? { opacity: 0.3 } : false]} onTouchStart={Keyboard.dismiss}>Cardápio</Text>
             <KeyboardAvoidingView
-                behavior="padding"
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 100}
-                enabled={true}
+                 behavior="padding"
+                 keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 100}
+                 enabled={true}
+                style={{overflow: "hidden"}}
             >
                 <View style={styles.list} onTouchStart={popUp ? Keyboard.dismiss : false}>
                     <FlatList style={popUp ? { opacity: 0.3 } : false}
@@ -89,11 +94,11 @@ export default function Menu() {
                                 <View style={styles.card}>
                                     <View>
                                         <Text style={styles.description}>Nome</Text>
-                                        <CustomTextInput style={styles.nameInput} name={item.name} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={store} />
+                                        <CustomTextInput style={styles.nameInput} doc={docId} user={navigation.getState().routes[0].params.userId}  name={item.name} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={navigation.getState().routes[0].params.store} />
                                     </View>
                                     <Text style={styles.description}>Preço</Text>
                                     <View style={styles.priceAndClose}>
-                                        <CustomNumberInput style={styles.priceInput} price={item.price} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={store}/>
+                                        <CustomNumberInput style={styles.priceInput} doc={docId} user={navigation.getState().routes[0].params.userId} price={item.price} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={navigation.getState().routes[0].params.store}/>
                                         <TouchableOpacity
                                             onPress={() => deleteProduct(index)}
                                         >

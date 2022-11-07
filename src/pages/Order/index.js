@@ -2,32 +2,38 @@ import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useState, useEffect } from "react"
 
 import firebase from "../../config/firebaseConfig";
-import { FontAwesome, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from "./style"
 
-export default function Order({ navigation }) {
+export default function Order({ navigation, route }) {
     const database = firebase.firestore()
     const [order, setOrder] = useState([])
 
+
     useEffect(() => {
-        database.collection("Orders").orderBy("date", "asc").onSnapshot((query) => {
-            const list = []
-            query.forEach(element => {
-                if(element.data().finalizado === false)
-                    list.push({ ...element.data(), id: element.id })
-            });
-            setOrder(list)
-        })
+        try {
+            database.collection("Orders").orderBy("date", "asc").onSnapshot((query) => {
+                const list = []
+                query.forEach(element => {
+                    if(element.data().finalizado === false && element.data().userId === route.params.userId)
+                        list.push({ ...element.data(), id: element.id })
+                });
+                setOrder(list)
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        
     }, [])
 
     function finishOrder(id) {
-        database.collection("Orders").doc(id).update({
+        database.collection(route.params.userId).doc(id).update({
             finalizado: true
         })
     }
 
     function deleteOrder(id) {
-        database.collection("Orders").doc(id).delete()
+        database.collection(route.params.userId).doc(id).delete()
     }
 
     function convertToDate(time) {
@@ -99,7 +105,7 @@ export default function Order({ navigation }) {
             />
             <TouchableOpacity
                 style={styles.buttonNewOrder}
-                onPress={() => navigation.navigate("Novo Pedido")}>
+                onPress={() => navigation.navigate("Novo Pedido", {userId: route.params.userId})}>
                  <MaterialCommunityIcons
                     name="square-edit-outline"
                     size={23}

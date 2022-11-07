@@ -1,25 +1,79 @@
 import { View, SafeAreaView, Text, TextInput, TouchableOpacity } from "react-native";
 import {  MaterialCommunityIcons } from "@expo/vector-icons"
 
-import styles from "./style";
+import firebase from "firebase";
 
-export default function Login(){
+import styles from "./style";
+import { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+
+export default function Login({navigation}){
+
+    const[email, setEmail] = useState("")
+    const[password, setPassword] = useState("")
+    const[error, setError] = useState(false)
+
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              var uid = user.uid;
+              navigation.navigate("Todos os Pedidos", { screen: "Pedidos", params:{userId: user.uid }})
+            } else {
+                isFocused && error? setError(false) & setEmail("") & setPassword(""):false
+            }
+          });
+    }, [isFocused, email, password])
+
+    const signIn = () =>{
+        if(email === "" || password === ""){
+            setError(true)
+        }else{
+            try{
+                firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+              let user = userCredential.user;
+              navigation.navigate("Todos os Pedidos", { screen: "Pedidos", params:{userId: user.uid }})
+            })
+            .catch((error) => {
+              let errorCode = error.code;
+              let errorMessage = error.message;
+            });
+            }catch(err){
+                setError(true)
+            } 
+        }
+    }
+
+
     return(
         <SafeAreaView style={styles.container}>
-            <Text>Pagina de Login</Text>
-            <Text>Login</Text>
-            <TextInput placeholder="E-mail"></TextInput>
-            <Text>Senha</Text>
-            <TextInput secureTextEntry={true} placeholder="Senha"></TextInput>
-            <View style={styles.error}>
+            <View style={styles.slogan}>
+            <Text style={styles.title}>orderNotes</Text>
+            <MaterialCommunityIcons
+                    name="notebook-edit"
+                    size={100}
+                    color={"#f92e44"}
+                />
+            </View>
+            <View style={styles.inputs}>
+            <Text style={styles.label}>E-mail</Text>
+            <TextInput placeholder="E-mail" style={styles.input} value={email} onChangeText={setEmail}></TextInput>
+            <Text style={styles.label}>Senha</Text>
+            <TextInput secureTextEntry={true} placeholder="Senha" value={password} onChangeText={setPassword} style={styles.input}></TextInput>
+            </View>
+            <View style={error? styles.error: [styles.error, {display: "none"}]}>
                 <MaterialCommunityIcons
                     name="alert-circle"
                     size={23}
                     color={"#b5b5b5"}
                 /><Text>E-mail ou senha incorretos</Text>
             </View>
-            <TouchableOpacity><Text>Login</Text></TouchableOpacity>
-            <Text>Registre-se</Text>
+            <View style={styles.buttons}>
+            <TouchableOpacity style={styles.btn} onPress={signIn}><Text style={styles.btnTxt}>Login</Text></TouchableOpacity>
+            <Text style={styles.register} onPress={() => navigation.navigate("Registrar")}>Registre-se</Text>
+            </View>
         </SafeAreaView>
     )
 }

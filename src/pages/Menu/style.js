@@ -1,4 +1,7 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
+
+import {vh} from "react-native-css-vh-vw"
+
 
 const styles = StyleSheet.create({
     container: {
@@ -6,16 +9,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         paddingTop: 20,
         paddingHorizontal: 30,
-        paddingBottom: 100
+        paddingBottom: 100,
     },
     title:{
         fontSize: 30,
         fontWeight: "bold",
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 15,
     },
     list:{
-        maxHeight:"90%"
+        minHeight: vh(65),
+        maxHeight: vh(70),
+        overflow: "scroll"
     },
     card:{
         flex: 1,
@@ -24,7 +29,7 @@ const styles = StyleSheet.create({
         borderColor: "#e5e5e5",
         borderRadius: 4,
         padding: 10,
-        marginBottom: 10
+        marginBottom: Platform.OS === "ios"? 10 : 5
     },
     description:{
         fontSize: 14,

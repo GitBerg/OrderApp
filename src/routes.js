@@ -1,6 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { FontAwesome, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
 
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
 import Menu from "./pages/Menu";
 import FinalizedOrders from "./pages/FinalizedOrders";
 import Settings from "./pages/Settings";
@@ -8,11 +11,12 @@ import Store from "./pages/Store";
 import Order from "./pages/Order";
 
 const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
 
-export default function Routes() {
+export default function Routes({route}) {
     return(
         <Tab.Navigator
-            initialRouteName="Order Notes"
+            initialRouteName="Pedidos"
             screenOptions={{
                 tabBarActiveTintColor: "#f92e6a",
                 tabBarStyle: {
@@ -75,6 +79,7 @@ export default function Routes() {
             <Tab.Screen
                 name="Cardápio"
                 component={Menu}
+                initialParams={route.params.userId}
                 options={{
                   headerTintColor: "#f92e6a",
                   tabBarIcon: ({color, size, focused} ) => {

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { TextInput, Keyboard } from "react-native";
 
-import database from "../../../config/firebaseConfig";
+import firebase from "../../../config/firebaseConfig";
 
 export default function CustomTextInput(props){
 
     const [name, setName] = useState(props.name)
     const [focus, setFocus] = useState(false)
-
+    const database = firebase.firestore()
 
 
     const handleOnFocus = () => {
@@ -19,11 +19,8 @@ export default function CustomTextInput(props){
         let upPrice = newArray[props.index].price
         newArray[props.index] = {name:name, price: upPrice}
         props.setProdutos([...newArray])
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").update({
-            store:{
-                menu: [...newArray],
-                name: props.storeName
-            }
+        database.collection(props.user).doc(props.doc).update({
+                menu: [...newArray]
         })
         setFocus(false)
     }
