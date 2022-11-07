@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard, TouchableWithoutFeedback, Image, KeyboardAvoidingView, Platform } from "react-native";
 
-import database from "../../config/firebaseConfig";
+import firebase from "../../config/firebaseConfig";
 import styles from "./style"
 
 export default function FView({navigation, route}) {
-
+    const database = firebase.firestore()
     const [mesaEdit, setMesaEdit] = useState(route.params.mesa);
     const [produtos, setProdutos] = useState([]);
     const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);

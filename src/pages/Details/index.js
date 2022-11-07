@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard, TouchableWithoutFeedback, Image, KeyboardAvoidingView, Platform } from "react-native";
 import { FontAwesome } from "@expo/vector-icons"
 
-import database from "../../config/firebaseConfig";
+import firebase from "../../config/firebaseConfig";
 import styles from "./style"
 
 export default function Details({navigation, route}) {
@@ -11,10 +11,9 @@ export default function Details({navigation, route}) {
     const [produtos, setProdutos] = useState([]);
     const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);
     const [avoidingView, setAvoidingView] = useState(false)
-
+    const database = firebase.firestore()
 
     useEffect(() => {
-
         database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
             const list = []
             

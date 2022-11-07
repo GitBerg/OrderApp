@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
+import {  MaterialCommunityIcons } from "@expo/vector-icons"
+
 
 import styles from "./style"
 
-import database from "../../config/firebaseConfig";
+import firebase from "../../config/firebaseConfig";
 
 export default function Store() {
-
+    const database = firebase.firestore()
     const [store, setStore] = useState({})
     const [finishedOrders, setFinishedOrders] = useState([])
     const [storeName, setStoreName] = useState("")
@@ -39,16 +41,26 @@ export default function Store() {
 
     return (
         <ScrollView style={styles.container}>
+            <View style={styles.title}>
+            <MaterialCommunityIcons
+                name="storefront"
+                size={120}
+                color={"#f92e6a"}
+            />
             <Text style={styles.storeName}>{store.name}</Text>
-            <Text>Pedidos</Text>
-            <Text>Finalizados: {finishedOrders.length}</Text>
-            <Text>Com observações: {finishedOrders.filter(el => el.observacoes?el:false).length}</Text>
-            <Text>Hoje: {finishedOrders.filter(el => {
+            </View>
+            <Text style={styles.geral}>Visão Geral</Text>
+            <View style={styles.infos}>
+            <Text style={styles.tag}>Pedidos</Text>
+            <Text  style={styles.desc}>Finalizados: {finishedOrders.length}</Text>
+            <Text style={styles.desc}>Com observações: {finishedOrders.filter(el => el.observacoes?el:false).length}</Text>
+            <Text style={styles.desc}>Hoje: {finishedOrders.filter(el => {
                 const data = new Date(el.date.seconds * 1000 + el.date.nanoseconds/1000000)
                 const day = data.getDate();
                 const currentDay = new Date().getDate()
                 return day === currentDay
             }).length}</Text>
+            </View>
         </ScrollView>
     )
 }

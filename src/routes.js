@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { FontAwesome, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
-import { createStackNavigator } from "@react-navigation/stack";
 
 import Menu from "./pages/Menu";
 import FinalizedOrders from "./pages/FinalizedOrders";
@@ -9,7 +8,6 @@ import Store from "./pages/Store";
 import Order from "./pages/Order";
 
 const Tab = createBottomTabNavigator()
-const Stack = createStackNavigator()
 
 export default function Routes() {
     return(

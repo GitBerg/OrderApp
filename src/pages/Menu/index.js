@@ -8,11 +8,11 @@ import CustomNewNumberInput from "./CustomNewNumberInput";
 
 import {  MaterialCommunityIcons } from "@expo/vector-icons"
 
-import database from "../../config/firebaseConfig";
+import firebase from "../../config/firebaseConfig";
 import styles from "./style"
 
 export default function Menu() {
-
+    const database = firebase.firestore()
     const [produtos, setProdutos] = useState([])
     const [popUp, setPopUp] = useState(false)
     const [newProductName, setNewProductName] = useState("")

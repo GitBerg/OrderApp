@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard,KeyboardAvoidingView, Platform } from "react-native";
 import { FontAwesome } from "@expo/vector-icons"
 
-import database from "../../config/firebaseConfig";
+import firebase from "../../config/firebaseConfig";
 import styles from "./style"
 
 export default function NewOrder({ navigation }) {
-
+    const database = firebase.firestore()
     const [mesa, setMesa] = useState(null);
     const [produtos, setProdutos] = useState([]);
     const [observacoes, setObservacoes] = useState(null);

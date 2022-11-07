@@ -4,17 +4,31 @@ import { createStackNavigator } from "@react-navigation/stack";
 import NewOrder from "./src/pages/NewOrder";
 import Details from "./src/pages/Details";
 import FView from "./src/pages/FView";
+import Login from "./src/pages/Login";
+import Register from "./src/pages/Register";
 
 import Routes from "./src/routes";
-
-
 
 const Stack = createStackNavigator()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false,
+              }}
+            />
+             <Stack.Screen
+              name="Registrar"
+              component={Register}
+              options={{
+                headerShown: false,
+              }}
+            />
       <Stack.Screen
               name="Todos os Pedidos"
               component={Routes}

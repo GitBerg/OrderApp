@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useState, useEffect } from "react"
 
-import database from "../../config/firebaseConfig";
+import firebase from "../../config/firebaseConfig";
 import { FontAwesome, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from "./style"
 
 export default function Order({ navigation }) {
-
+    const database = firebase.firestore()
     const [order, setOrder] = useState([])
 
     useEffect(() => {
