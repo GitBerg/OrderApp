@@ -12,6 +12,7 @@ export default function NewOrder({ navigation, route }) {
     const [observacoes, setObservacoes] = useState(null);
     const [totalValue, setTotalValue ] = useState(0);
     const [avoidingView, setAvoidingView] = useState(false)
+    const user = route.params.userId
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ export default function NewOrder({ navigation, route }) {
             total: totalValue
         })
 
-        navigation.navigate("Pedidos")
+        navigation.navigate("Pedidos", {userId: user})
     }
 
     return (
@@ -133,7 +134,7 @@ export default function NewOrder({ navigation, route }) {
                 />
                 <KeyboardAvoidingView
                 behavior="position"
-                keyboardVerticalOffset = {Platform.OS === 'ios'? 90: 100}
+                keyboardVerticalOffset = {Platform.OS === 'ios'? 90: -50}
                 enabled = {avoidingView}>
                     <View style={{backgroundColor: "#fff"}}>
                 <Text style={styles.description}>Observações:</Text>

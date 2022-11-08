@@ -17,23 +17,23 @@ export default function Store() {
     }, [])
   
     const fetchUser = () => {
-        try {
-            database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
-                const value = query.data().store
-                const name = query.data().store.name
-                database.collection("Orders").where("store", "==", name).onSnapshot((query) => {
-                    const finalizedOrders = []
-                    query.forEach(element => {
-                        if (element.data().finalizado === true)
-                            finalizedOrders.push({ ...element.data(), id: element.id })
-                    });
-                    setFinishedOrders(finalizedOrders)
-                })
-                setStore(value)
-            })
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
+        //         const value = query.data().store
+        //         const name = query.data().store.name
+        //         database.collection("Orders").where("store", "==", name).onSnapshot((query) => {
+        //             const finalizedOrders = []
+        //             query.forEach(element => {
+        //                 if (element.data().finalizado === true)
+        //                     finalizedOrders.push({ ...element.data(), id: element.id })
+        //             });
+        //             setFinishedOrders(finalizedOrders)
+        //         })
+        //         setStore(value)
+        //     })
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 
 

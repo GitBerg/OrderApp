@@ -8,14 +8,14 @@ import styles from "./style"
 export default function Order({ navigation, route }) {
     const database = firebase.firestore()
     const [order, setOrder] = useState([])
-
+    const user = route.params.userId
 
     useEffect(() => {
         try {
             database.collection("Orders").orderBy("date", "asc").onSnapshot((query) => {
                 const list = []
                 query.forEach(element => {
-                    if(element.data().finalizado === false && element.data().userId === route.params.userId)
+                    if(element.data().finalizado === false && element.data().userId === user)
                         list.push({ ...element.data(), id: element.id })
                 });
                 setOrder(list)
@@ -27,13 +27,13 @@ export default function Order({ navigation, route }) {
     }, [])
 
     function finishOrder(id) {
-        database.collection(route.params.userId).doc(id).update({
+        database.collection("Orders").doc(id).update({
             finalizado: true
         })
     }
 
     function deleteOrder(id) {
-        database.collection(route.params.userId).doc(id).delete()
+        database.collection("Orders").doc(id).delete()
     }
 
     function convertToDate(time) {
@@ -75,7 +75,8 @@ export default function Order({ navigation, route }) {
                                         mesa: item.mesa,
                                         observacoes: item.observacoes,
                                         finalizado: item.finalizado,
-                                        totalValue: item.totalValue
+                                        totalValue: item.totalValue,
+                                        userId: user
                                     })
                                 }}
                             >

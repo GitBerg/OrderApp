@@ -88,6 +88,7 @@ export default function Register({ navigation, route }) {
           value={store}
           onChangeText={setStore}
           style={styles.input}
+          keyboardType={"web-search"}
         ></TextInput>
       </KeyboardAvoidingView>
       <View style={error ? styles.error : [styles.error, { display: "none" }]}>
@@ -103,7 +104,7 @@ export default function Register({ navigation, route }) {
           <Text style={styles.btnTxt}>Criar</Text>
         </TouchableOpacity>
         <Text
-          style={styles.register}
+          style={styles.login}
           onPress={() => navigation.navigate("Login")}
         >
           Fazer login

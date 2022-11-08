@@ -12,10 +12,10 @@ export default function FView({navigation, route}) {
 
     useEffect(() => {
 
-        database.collection("Users").doc("PHc3F9Pjnw6Fg12SUlKE").onSnapshot((query) => {
+        database.collection("Orders").doc(route.params.id).onSnapshot((query) => {
             const list = []
             
-            query.data().store.menu.forEach((el, index) => {
+            query?.data().products.forEach((el, index) => {
                 list.push({ ...el, qtd: 0})
                     route.params.products.forEach(e =>{
                         el.name === e.name? list[index] = e: false

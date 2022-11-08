@@ -51,9 +51,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold"
     },
-    register:{
+    login:{
         color: "blue",
-        fontSize: 16
+        fontSize: 16,
+        padding: 20
     }
 })
 

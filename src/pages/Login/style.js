@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     },
     register:{
         color: "blue",
-        fontSize: 16
+        fontSize: 16,
+        padding: 20,
     }
 })
 

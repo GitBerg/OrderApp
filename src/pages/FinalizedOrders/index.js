@@ -8,12 +8,13 @@ import styles from "./style"
 export default function FinalizedOrders({ navigation }) {
     const database = firebase.firestore()
     const [order, setOrder] = useState([])
+    const userId = navigation.getState().routes[0].params.userId
 
     useEffect(() => {
         database.collection("Orders").orderBy("date", "desc").onSnapshot((query) => {
             const list = []
             query.forEach(element => {
-                if(element.data().finalizado === true){
+                if(element.data().finalizado === true && element.data().userId === userId){
                     list.push({ ...element.data(), id: element.id })
                 }
             });

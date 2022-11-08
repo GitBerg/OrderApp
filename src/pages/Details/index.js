@@ -12,20 +12,21 @@ export default function Details({navigation, route}) {
     const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);
     const [avoidingView, setAvoidingView] = useState(false)
     const database = firebase.firestore()
+    const user = route.params.userId
 
     useEffect(() => {
-        database.collection(navigation.getState().routes[0].params.userId).onSnapshot((query) => {
-            const list = []
-            
-            // query.data().store.menu.forEach((el, index) => {
-            //     list.push({ ...el, qtd: 0})
-            //         route.params.products.forEach(e =>{
-            //             el.name === e.name? list[index] = e: false
-            //         })
-            // })
-            setProdutos(list)
-        })
-
+        try{
+            database.collection("Orders").doc(route.params.id).onSnapshot((query) => {
+                let list = []
+                query?.data().products.forEach((prod) => {
+                    list.push(prod)  
+                })
+                setProdutos(list)
+                
+            }) 
+        }catch(err){
+            console.log(err);
+        }
     }, [])
 
     
@@ -34,15 +35,12 @@ export default function Details({navigation, route}) {
         let products = produtos.filter((el) => {
             return el.qtd > 0
         })
-
         database.collection("Orders").doc(route.params.id).update({
             mesa: mesaEdit,
             products: products,
             observacoes: observacoesEdit,
         })
-
-        navigation.navigate("Pedidos")
-        
+        navigation.navigate("Pedidos", {userId: user})
     }
 
     return (
