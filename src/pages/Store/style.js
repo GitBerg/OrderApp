@@ -7,11 +7,13 @@ const styles = StyleSheet.create({
         padding: 20
     },
     title:{
+        width: "100%",
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "flex-start"
     },
     storeName:{
-        marginLeft: 5,
+        fontWeight:"bold",
         fontSize: 35
     },
     geral:{
@@ -25,7 +27,8 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         borderWidth: 1,
         borderColor: "#b5b5b5",
-        borderRadius: 14
+        borderRadius: 14,
+        marginBottom: 10
     },
     tag:{
         fontSize: 22,

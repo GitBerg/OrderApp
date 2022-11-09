@@ -16,12 +16,15 @@ export default function Login({navigation}){
     const isFocused = useIsFocused()
 
     useEffect(() => {
+
+        !isFocused? setEmail("") & setPassword(""): false
+
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-              var uid = user.uid;
-              navigation.navigate("Todos os Pedidos", { screen: "Pedidos", params:{userId: user.uid }})
+              let uid = user.uid;
+              navigation.navigate("Todos os Pedidos", { screen: "Pedidos", params:{userId: uid }})
             } else {
-                isFocused && error? setError(false) & setEmail("") & setPassword(""):false
+                isFocused && error? setError(false):false
             }
           });
     }, [isFocused, email, password])
@@ -37,11 +40,12 @@ export default function Login({navigation}){
               navigation.navigate("Todos os Pedidos", { screen: "Pedidos", params:{userId: user.uid }})
             })
             .catch((error) => {
-              let errorCode = error.code;
-              let errorMessage = error.message;
+                setError(true)
+                let errorCode = error.code;
+                let errorMessage = error.message;
             });
             }catch(err){
-                setError(true)
+               console.log(err);
             } 
         }
     }

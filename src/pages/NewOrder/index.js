@@ -68,6 +68,7 @@ export default function NewOrder({ navigation, route }) {
                     placeholder="Digite o número da mesa"
                     onChangeText={setMesa}
                     value={mesa}
+                    maxLength={2}
                     keyboardType={"number-pad"}
                     onTouchStart={() => setAvoidingView(false)}
                 />
@@ -133,8 +134,8 @@ export default function NewOrder({ navigation, route }) {
                     }
                 />
                 <KeyboardAvoidingView
-                behavior="position"
-                keyboardVerticalOffset = {Platform.OS === 'ios'? 90: -50}
+                behavior={Platform.OS === 'ios'? "position": "height"}
+                keyboardVerticalOffset = {Platform.OS === 'ios'? 90: 100}
                 enabled = {avoidingView}>
                     <View style={{backgroundColor: "#fff"}}>
                 <Text style={styles.description}>Observações:</Text>
@@ -143,8 +144,10 @@ export default function NewOrder({ navigation, route }) {
                     placeholder="Digite as observacoes do pedido"
                     onChangeText={setObservacoes}
                     value={observacoes}
+                    keyboardType ={"url"}
                     multiline={true}
                     numberOfLines={4}
+                    maxLength={140}
                     onTouchStart={() => setAvoidingView(true)}
                 />
                 </View>

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList, Keyboard, TouchableWithoutFeedback, Image, KeyboardAvoidingView, Platform } from "react-native";
+import {  View, Text, TextInput, TouchableOpacity, FlatList, Keyboard, TouchableWithoutFeedback, Image, KeyboardAvoidingView, Platform } from "react-native";
 import { FontAwesome } from "@expo/vector-icons"
 
 import firebase from "../../config/firebaseConfig";
 import styles from "./style"
 
 export default function Details({navigation, route}) {
-
     const [mesaEdit, setMesaEdit] = useState(route.params.mesa);
     const [produtos, setProdutos] = useState([]);
     const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);
@@ -16,14 +15,23 @@ export default function Details({navigation, route}) {
 
     useEffect(() => {
         try{
-            database.collection("Orders").doc(route.params.id).onSnapshot((query) => {
-                let list = []
-                query?.data().products.forEach((prod) => {
-                    list.push(prod)  
+            database.collection(user).onSnapshot((query) => {
+                let userProdList = []
+                query.forEach(user => {
+                    user?.data().menu.forEach(prod => {
+                        userProdList.push({...prod, qtd: 0})
+                    })
                 })
-                setProdutos(list)
-                
-            }) 
+                database.collection("Orders").doc(route.params.id).onSnapshot((query) => {
+                    query?.data()?.products.forEach((el) => {
+                        userProdList.forEach((prod, index) => {
+                            el.name === prod.name && el.qtd > 0? userProdList[index] = el: false
+                        })
+                   })
+                    setProdutos(userProdList)
+                }) 
+            })
+  
         }catch(err){
             console.log(err);
         }
@@ -50,7 +58,6 @@ export default function Details({navigation, route}) {
                 <Text style={styles.description}>Mesa:</Text>
 
                 <KeyboardAvoidingView
-                behavior= {Platform.OS === 'ios'? 'padding': 'height'}
                 enabled = {avoidingView}>
                 <TextInput
                     style={styles.input}
@@ -59,6 +66,7 @@ export default function Details({navigation, route}) {
                     value={mesaEdit}
                     keyboardType={"number-pad"}
                     onTouchStart={() => setAvoidingView(false)}
+                    maxLength={2}
                 />
                 </KeyboardAvoidingView>
                 <Text style={styles.description}>Produtos:</Text>
@@ -122,7 +130,7 @@ export default function Details({navigation, route}) {
                     }
                 />
                 <KeyboardAvoidingView
-                behavior="position"
+                behavior={Platform.OS === 'ios'? "position": "height"}
                 keyboardVerticalOffset = {Platform.OS === 'ios'? 90: 100}
                 enabled = {avoidingView}>
                      <View style={{backgroundColor: "#fff"}}>
@@ -132,8 +140,10 @@ export default function Details({navigation, route}) {
                     placeholder="Digite as observacoes do pedido"
                     onChangeText={setObservacoesEdit}
                     value={observacoesEdit}
+                    keyboardType={"url"}
                     multiline={true}
                     numberOfLines={4}
+                    maxLength={140}
                     onTouchStart={() => setAvoidingView(true)}
                 />
                 </View>

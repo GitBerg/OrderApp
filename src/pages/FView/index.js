@@ -33,9 +33,6 @@ export default function FView({navigation, route}) {
     }
 
     return (
-        <KeyboardAvoidingView style={styles.kav}
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
             <View style={styles.container}>
                 <Text style={styles.title}>Mesa {route.params.mesa<=9 ? "0" + route.params.mesa: route.params.mesa } Finalizado</Text>
                 <Text style={styles.description}>Mesa:</Text>
@@ -93,6 +90,5 @@ export default function FView({navigation, route}) {
                     </TouchableOpacity>
                 </View>
             </View>
-        </KeyboardAvoidingView>
     )
 }
