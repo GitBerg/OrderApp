@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     },
     description:{
         fontSize: 18,
-        marginBottom: 10
+        marginBottom: 10,
+        fontStyle: "italic",
     },
     input:{
         fontSize: 18,
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5cf",
         borderColor: "#e5e5e5",
         marginBottom: 10,
-        maxHeight: 30
+        maxHeight: 30,
+        fontStyle: "italic",
     },
     buttonNewOrder: {
         position: "relative",

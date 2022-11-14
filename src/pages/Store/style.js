@@ -33,9 +33,10 @@ const styles = StyleSheet.create({
     tag:{
         fontSize: 22,
         fontWeight:"bold",
-        marginBottom: 10
+        marginBottom: 10,
     },
     desc:{
+        fontStyle: "italic",
         fontSize: 18,
         lineHeight: 25
     }

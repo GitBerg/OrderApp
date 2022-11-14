@@ -11,19 +11,23 @@ export default function FView({navigation, route}) {
     const [observacoesEdit, setObservacoesEdit] = useState(route.params.observacoes);
 
     useEffect(() => {
-
-        database.collection("Orders").doc(route.params.id).onSnapshot((query) => {
-            const list = []
-            
-            query?.data().products.forEach((el, index) => {
-                list.push({ ...el, qtd: 0})
-                    route.params.products.forEach(e =>{
-                        el.name === e.name? list[index] = e: false
-                    })
+        try {
+            database.collection("Orders").doc(route.params.id).onSnapshot((query) => {
+                const list = []
+                
+                query?.data()?.products.forEach((el, index) => {
+                    list.push({ ...el, qtd: 0})
+                        route.params.products.forEach(e =>{
+                            el.name === e.name? list[index] = e: false
+                        })
+                })
+                let newList = list.filter(e => e.qtd > 0)
+                setProdutos(newList)
             })
-            let newList = list.filter(e => e.qtd > 0)
-            setProdutos(newList)
-        })
+        } catch (error) {
+            console.log(error);
+        }
+        
     }, [])
 
     

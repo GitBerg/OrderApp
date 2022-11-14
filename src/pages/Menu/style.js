@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         marginBottom: Platform.OS === "ios"? 10 : 5
     },
     description:{
+        fontStyle: "italic",
         fontSize: 14,
         marginBottom: 5,
     },

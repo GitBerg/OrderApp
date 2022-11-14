@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     },
     description:{
         fontSize: 18,
-        marginBottom: 10
+        marginBottom: 10,
+        fontStyle: "italic",
     },
     input:{
         fontSize: 18,
