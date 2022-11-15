@@ -39,16 +39,18 @@ const styles = StyleSheet.create({
     nameInput:{
         fontSize: 18,
         marginBottom: 5,
+        color:"#555",
         borderBottomWidth: 1,
         paddingLeft: 12,
         borderRadius: 4,
-        paddingBottom: 5
+        paddingBottom: 5,
     },
     priceInput:{
         fontSize: 18,
         marginBottom: 5,
         borderBottomWidth: 1,
         width: "20%",
+        color:"#555",
         textAlign: "center",
         borderRadius: 4,
     },

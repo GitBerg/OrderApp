@@ -91,6 +91,11 @@ export default function Store({ navigation }) {
       </View>
       <Text style={styles.geral}>Visão Geral</Text>
       <View style={styles.infos}>
+        <Text style={styles.tag}>Faturado</Text>
+        <Text style={styles.desc}>Total: R$</Text>
+        <Text style={styles.desc}>Hoje: R$</Text>
+      </View>
+      <View style={styles.infos}>
         <Text style={styles.tag}>Pedidos</Text>
         <Text style={styles.desc}>Finalizados: {finishedOrders.length}</Text>
         <Text style={styles.desc}>

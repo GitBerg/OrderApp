@@ -1,10 +1,9 @@
 import { View, Text, FlatList, TextInput, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import { useEffect, useState } from "react";
 
-import CustomTextInput from "./CustomTextInput";
-import CustomNumberInput from "./CustomNumberInput";
 import CustomNewTextInput from "./CustomNewTextInput";
 import CustomNewNumberInput from "./CustomNewNumberInput";
+import EditingPopUp from "./EditingPopUp";
 
 import {  MaterialCommunityIcons } from "@expo/vector-icons"
 
@@ -18,6 +17,10 @@ export default function Menu({navigation}) {
     const [popUp, setPopUp] = useState(false)
     const [newProductName, setNewProductName] = useState("")
     const [newProductPrice, setNewProductPrice] = useState("0")
+    const [name, setName] = useState("")
+    const [price, setPrice] = useState("")
+    const [index, setIndex] = useState(0)
+    const [editing, setEditing] = useState(false)
 
 
     useEffect(() => {
@@ -65,7 +68,7 @@ export default function Menu({navigation}) {
 
     const createNewProduct = () => {
         setPopUp(false)
-        let produto = { name: newProductName, price: Number(newProductPrice) }
+        let produto = { name: newProductName, price: newProductPrice }
         database.collection(navigation.getState().routes[0].params.userId).doc(docId).update({
                 menu: [...produtos, produto]
         })
@@ -75,48 +78,59 @@ export default function Menu({navigation}) {
         Keyboard.dismiss()
     }
 
+    const handleSelectProd = (name, price, index) => {
+        setName(name)
+        setPrice(price)
+        setIndex(index)
+        setEditing(true)
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={[styles.title, popUp ? { opacity: 0.3 } : false]} onTouchStart={Keyboard.dismiss}>Cardápio</Text>
-            <KeyboardAvoidingView
-                 behavior="padding"
-                 keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 100}
-                 enabled={true}
-                style={{overflow: "hidden"}}
-            >
-                <View style={styles.list} onTouchStart={popUp ? Keyboard.dismiss : false}>
-                    <FlatList style={popUp ? { opacity: 0.3 } : false}
-                        pointerEvents={popUp ? "none" : "auto"}
+            <Text style={[styles.title, popUp||editing ? { opacity: 0.3 } : false]} onTouchStart={Keyboard.dismiss}>Cardápio</Text>
+                <View style={styles.list} pointerEvents={popUp||editing ? "none" : "auto"} onTouchStart={popUp ? Keyboard.dismiss : false}>
+                    <FlatList style={popUp||editing ? { opacity: 0.3 } : false}
                         data={produtos}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item, index }) => {
                             return (
-                                <View style={styles.card}>
+                                <TouchableOpacity style={styles.card} onPress={() => handleSelectProd(item.name, item.price, index)}>
                                     <View>
                                         <Text style={styles.description}>Nome</Text>
-                                        <CustomTextInput style={styles.nameInput} doc={docId} user={navigation.getState().routes[0].params.userId}  name={item.name} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={navigation.getState().routes[0].params.store} />
+                                        <TextInput
+                                        pointerEvents="none"
+                                            editable={false}
+                                            value={item.name}
+                                            selectTextOnFocus={false}
+                                            style={styles.nameInput}
+                                        />
                                     </View>
                                     <Text style={styles.description}>Preço</Text>
                                     <View style={styles.priceAndClose}>
-                                        <CustomNumberInput style={styles.priceInput} doc={docId} user={navigation.getState().routes[0].params.userId} price={item.price} setProdutos={setProdutos} produtos={produtos} index={index} setPopUp={setPopUp} storeName={navigation.getState().routes[0].params.store}/>
+                                        <TextInput
+                                        pointerEvents="none"
+                                            editable={false} 
+                                            value={item.price}
+                                            selectTextOnFocus={false}
+                                            style={styles.priceInput}
+                                        />
                                         <TouchableOpacity
                                             onPress={() => deleteProduct(index)}
                                         >
                                             <MaterialCommunityIcons
                                                 name="close-box"
-                                                size={30}
+                                                size={40}
                                                 color={"#f92e6a"}
                                             />
                                         </TouchableOpacity>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             )
                         }} />
                 </View>
-            </KeyboardAvoidingView>
             <TouchableOpacity
                 onPress={addProduct}
-                style={styles.btnAddProduct}
+                style={editing?[styles.btnAddProduct,{ opacity: 0.3 }]:styles.btnAddProduct}
             >
                 <MaterialCommunityIcons
                     name="plus-box"
@@ -126,7 +140,7 @@ export default function Menu({navigation}) {
             </TouchableOpacity>
             <View style={popUp ? styles.popUp : { display: "none" }}>
                 <View>
-                    <Text style={[styles.description, {}]}>Nome</Text>
+                    <Text style={styles.description}>Nome</Text>
                     <CustomNewTextInput style={styles.nameInput} placeholder={"Nome do Novo Produto"} name={newProductName} textChange={setNewProductName} popUpOn={popUp} />
                 </View>
                 <Text style={styles.description}>Preço</Text>
@@ -143,7 +157,18 @@ export default function Menu({navigation}) {
                     </TouchableOpacity>
                 </View>
             </View>
-
+            <EditingPopUp 
+                produtos = {produtos}
+                setProdutos = {setProdutos}
+                editing = {editing}
+                setEditing = {setEditing}
+                style={styles}
+                database={database}
+                update={{name, price, index}}
+                setUpdate = {{setName, setPrice}}
+                user={navigation.getState().routes[0].params.userId}
+                doc={docId} 
+            />
         </View>
     )
 }

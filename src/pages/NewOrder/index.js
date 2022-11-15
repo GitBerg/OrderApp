@@ -144,7 +144,7 @@ export default function NewOrder({ navigation, route }) {
                     placeholder="Digite as observacoes do pedido"
                     onChangeText={setObservacoes}
                     value={observacoes}
-                    keyboardType ={"url"}
+                    keyboardType ={"default"}
                     multiline={true}
                     numberOfLines={4}
                     maxLength={140}
