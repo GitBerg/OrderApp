@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderColor: "#e5e5e5",
         backgroundColor: "#f5f5f5cf",
+        zIndex:10
     },
     card:{
         flex: 1,
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         maxHeight: 30,
         fontStyle: "italic",
+        zIndex:10
     },
     buttonNewOrder: {
         position: "relative",

@@ -78,6 +78,19 @@ export default function Store({ navigation }) {
  
   }
 
+  const saledToday = () => {
+    const saledToday = finishedOrders.filter((el) => {
+      const data = new Date(
+        el.date.seconds * 1000 + el.date.nanoseconds / 1000000
+      );
+      const day = data.getDate();
+      const currentDay = new Date().getDate();
+      return day === currentDay;
+    }).reduce((total, order) => total + order.total, 0)
+
+    return saledToday
+  }
+
 
   return (
     <ScrollView style={styles.container}>
@@ -92,19 +105,17 @@ export default function Store({ navigation }) {
       <Text style={styles.geral}>Visão Geral</Text>
       <View style={styles.infos}>
         <Text style={styles.tag}>Faturado</Text>
-        <Text style={styles.desc}>Total: R$</Text>
-        <Text style={styles.desc}>Hoje: R$</Text>
+        <Text style={styles.desc}>Total: R${finishedOrders.reduce((totalValue, order) => totalValue + order.total, 0)}</Text>
+        <Text style={styles.desc}>Hoje: R${saledToday()?saledToday():0}</Text>
       </View>
       <View style={styles.infos}>
         <Text style={styles.tag}>Pedidos</Text>
         <Text style={styles.desc}>Finalizados: {finishedOrders.length}</Text>
         <Text style={styles.desc}>
-          Com observações:{" "}
-          {finishedOrders.filter((el) => (el.observacoes ? el : false)).length}
+          Com observações: {finishedOrders.filter((el) => (el.observacoes ? el : false)).length}
         </Text>
         <Text style={styles.desc}>
-          Hoje:{" "}
-          {
+          Hoje: {
             finishedOrders.filter((el) => {
               const data = new Date(
                 el.date.seconds * 1000 + el.date.nanoseconds / 1000000

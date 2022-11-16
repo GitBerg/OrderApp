@@ -85,8 +85,15 @@ export default function Menu({navigation}) {
         setEditing(true)
     }
 
+    const closePopUp = () => {
+        setEditing(false)
+        setPopUp(false)
+        Keyboard.dismiss
+    }
+
     return (
-        <View style={styles.container}>
+        <View style={styles.container} >
+            <View onTouchStart={() => closePopUp()} style={{width:"100%", height:"100%", position: "absolute"}}></View>
             <Text style={[styles.title, popUp||editing ? { opacity: 0.3 } : false]} onTouchStart={Keyboard.dismiss}>Cardápio</Text>
                 <View style={styles.list} pointerEvents={popUp||editing ? "none" : "auto"} onTouchStart={popUp ? Keyboard.dismiss : false}>
                     <FlatList style={popUp||editing ? { opacity: 0.3 } : false}

@@ -43,7 +43,6 @@ export default function FView({navigation, route}) {
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Digite o número da mesa"
                     value={mesaEdit}
                     keyboardType={"number-pad"}
                     editable={false}
@@ -76,9 +75,8 @@ export default function FView({navigation, route}) {
                 <Text style={styles.description}>Observações:</Text>
                 <TextInput
                     style={styles.inputObservation}
-                    placeholder="Digite as observacoes do pedido"
                     editable={false}
-                    value={observacoesEdit}
+                    value={observacoesEdit?observacoesEdit: "Sem Observações"}
                     multiline={true}
                     numberOfLines={4}
                 />

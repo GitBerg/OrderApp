@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
         top: 260,
         left: "13%",
         padding: 20,
+        zIndex: 10
     }
 
 });

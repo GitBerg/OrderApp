@@ -57,6 +57,7 @@ export default function NewOrder({ navigation, route }) {
         style={styles.kav}
         >
             <View style={styles.container} >
+            <View onTouchStart={() => closePopUp()} style={{width:"100%", height:"100%", position: "absolute"}}></View>
                 <Text style={styles.title} onTouchStart={Keyboard.dismiss}>Novo Pedido</Text>
                 <Text style={styles.description} onTouchStart={Keyboard.dismiss}>Mesa:</Text>
 
@@ -137,8 +138,11 @@ export default function NewOrder({ navigation, route }) {
                 behavior={Platform.OS === 'ios'? "position": "height"}
                 keyboardVerticalOffset = {Platform.OS === 'ios'? 90: 100}
                 enabled = {avoidingView}>
-                    <View style={{backgroundColor: "#fff"}}>
-                <Text style={styles.description}>Observações:</Text>
+                <View style={{backgroundColor: "#fff"}}>
+                    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                        <Text style={styles.description}>Observações:</Text>
+                        <Text style={styles.description}> {observacoes?140 - observacoes.length: 140}/140</Text>
+                    </View>
                 <TextInput
                     style={styles.inputObservation}
                     placeholder="Digite as observacoes do pedido"

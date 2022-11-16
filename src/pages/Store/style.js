@@ -3,8 +3,9 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container:{
         flex: 1,
+        maxHeight: "87%",
         backgroundColor: "#fff",
-        padding: 20
+        paddingHorizontal: 20,
     },
     title:{
         width: "100%",
