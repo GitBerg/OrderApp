@@ -148,7 +148,7 @@ export default function Menu({navigation}) {
             <View style={popUp ? styles.popUp : { display: "none" }}>
                 <View>
                     <Text style={styles.description}>Nome</Text>
-                    <CustomNewTextInput style={styles.nameInput} placeholder={"Nome do Novo Produto"} name={newProductName} textChange={setNewProductName} popUpOn={popUp} />
+                    <CustomNewTextInput style={styles.nameInput} placeholder={"Nome do novo produto"} name={newProductName} textChange={setNewProductName} popUpOn={popUp} />
                 </View>
                 <Text style={styles.description}>Preço</Text>
                 <View style={styles.priceAndClose}>

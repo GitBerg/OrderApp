@@ -30,7 +30,43 @@ const styles = StyleSheet.create({
     passwordEye:{
         position: "absolute",
         right: 10,
-    }
+    },
+    btns:{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingHorizontal: 20
+    },
+    btn: {
+        position: "relative",
+        width: "40%",
+        paddingVertical: 15,
+        borderColor: "#f92e6a",
+        borderWidth: 2,
+        borderRadius: 4,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    viewExcludeBtn:{
+        flex:1,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    excludeBtn: {
+        position: "relative",
+        width: "40%",
+        paddingVertical: 15,
+        backgroundColor: "#f92e6a",
+        borderColor: "#bababa",
+        borderWidth: 2,
+        borderRadius: 4,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    error:{
+        marginBottom: 15,
+        flexDirection: "row",
+        alignItems: "center",
+    },
 })
 
 export default styles
