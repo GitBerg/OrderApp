@@ -1,4 +1,4 @@
-# Aplicativo desenvolvido para deisciplina de TCC na Universidade Federal de Campina Grande.
+# Aplicativo desenvolvido para disciplina de TCC na Universidade Federal de Campina Grande.
 
 ## OrderNotes
 
